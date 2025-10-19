@@ -1,0 +1,92 @@
+<% layout('layouts/boilerplate') %>
+
+<style>
+  .card-img-top {
+    object-fit: cover;
+    height: 200px;
+  }
+  .star-rating span {
+    font-size: 1rem;
+  }
+  .listing-buttons .btn {
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
+  }
+</style>
+
+<div class="container my-5">
+  <h2 class="mb-4">Profile</h2>
+
+  <!-- User Info -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-body">
+      <h5 class="card-title"><%= user.username %></h5>
+      <p class="card-text"><strong>Email:</strong> <%= user.email %></p>
+    </div>
+  </div>
+
+  <!-- User Listings -->
+  <h3>Your Listings</h3>
+  <% if(listings.length === 0) { %>
+    <p class="text-muted">You haven’t added any listings yet.</p>
+  <% } else { %>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <% listings.forEach(listing => { %>
+        <div class="col">
+          <div class="card h-100 shadow-sm">
+            <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title"><%= listing.title %></h5>
+              <p class="card-text mb-2">₹<%= listing.price.toLocaleString("en-IN") %> / night</p>
+              <div class="listing-buttons mt-auto">
+                <a href="/listings/<%= listing._id %>/edit" class="btn btn-outline-primary btn-sm">Edit</a>
+                <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" class="d-inline">
+                  <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure?');">Delete</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+
+  <!-- User Reviews -->
+  <h3 class="mt-5">Your Reviews</h3>
+  <% if(reviews.length === 0) { %>
+    <p class="text-muted">You haven’t written any reviews yet.</p>
+  <% } else { %>
+    <% reviews.forEach(review => { %>
+      <div class="card mb-3 shadow-sm">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-primary">
+            <% if (review.listing) { %>
+              On: <a href="/listings/<%= review.listing._id %>"><%= review.listing.title %></a>
+            <% } else { %>
+              On: Listing deleted
+            <% } %>
+          </h6>
+
+          <!-- Star Rating -->
+          <p class="star-rating">
+            <% for(let i=1; i<=5; i++) { %>
+              <% if(i <= review.rating) { %>
+                <span class="text-warning">&#9733;</span>
+              <% } else { %>
+                <span class="text-muted">&#9733;</span>
+              <% } %>
+            <% } %>
+          </p>
+
+          <p class="card-text"><%= review.comment %></p>
+
+          <% if (review.listing) { %>
+            <form action="/listings/<%= review.listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+              <button class="btn btn-outline-danger btn-sm" onclick="return confirm('Delete this review?');">Delete Review</button>
+            </form>
+          <% } %>
+        </div>
+      </div>
+    <% }) %>
+  <% } %>
+</div>

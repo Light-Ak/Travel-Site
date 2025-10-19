@@ -1,0 +1,154 @@
+<% layout('layouts/boilerplate') %>
+
+<style>
+  body, html {
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+  }
+
+  .fullwidth-container {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+  }
+
+  /* FILTER BAR STYLING */
+  #filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.65rem 2rem;
+    background-color: #fff;
+    border-bottom: 1px solid #e5e5e5;
+    position: sticky;
+    top: 72px;
+    z-index: 10;
+    margin-top: -0.3rem;
+  }
+
+  .filter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    color: #495057;
+    border-radius: 50px;
+    padding: 0.4rem 1rem;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+
+  .filter i {
+    font-size: 1rem;
+    color: #007bff;
+  }
+
+  .filter:hover {
+    background-color: #e9ecef;
+    transform: translateY(-2px);
+  }
+
+  .filter.active {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+  }
+
+  .filter.active i {
+    color: #fff;
+  }
+
+  /* CARD HOVER EFFECT */
+  .card:hover {
+    transform: translateY(-3px);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  /* IMAGE STYLING */
+  .card-img-top {
+    object-fit: cover;
+    height: 220px;
+    border-radius: 0.5rem 0.5rem 0 0;
+  }
+
+  /* CONTENT SPACING BELOW FILTER BAR */
+  .listings-container {
+    padding-top: 1.25rem;
+  }
+</style>
+
+<div class="container-fluid fullwidth-container px-0">
+  <!-- Filter Bar -->
+  <div id="filters" class="d-flex justify-content-start flex-wrap">
+    <a href="/listings" class="filter <%= !selectedCategory ? 'active' : '' %>" data-category="">
+      <i class="fa-solid fa-list"></i>
+      Show All
+    </a>
+
+    <a href="/listings?category=Budget Friendly" class="filter <%= selectedCategory === 'Budget Friendly' ? 'active' : '' %>" data-category="Budget Friendly">
+      <i class="fa-solid fa-dollar-sign"></i>
+      Budget Friendly
+    </a>
+
+
+    <a href="/listings?category=Mountains" class="filter <%= selectedCategory === 'Mountains' ? 'active' : '' %>" data-category="Mountains">
+      <i class="fa-solid fa-mountain"></i>
+      Mountains
+    </a>
+
+    <a href="/listings?category=Seaside" class="filter <%= selectedCategory === 'Seaside' ? 'active' : '' %>" data-category="Seaside">
+      <i class="fa-solid fa-water"></i>
+      Seaside
+    </a>
+
+    <a href="/listings?category=Camping" class="filter <%= selectedCategory === 'Camping' ? 'active' : '' %>" data-category="Camping">
+      <i class="fa-solid fa-campground"></i>
+      Camping
+    </a>
+
+    <a href="/listings?category=Countryside" class="filter <%= selectedCategory === 'Countryside' ? 'active' : '' %>" data-category="Countryside">
+      <i class="fa-solid fa-tractor"></i>
+      Countryside
+    </a>
+
+    <a href="/listings?category=City Life" class="filter <%= selectedCategory === 'City Life' ? 'active' : '' %>" data-category="City Life">
+      <i class="fa-solid fa-city"></i>
+      City Life
+    </a>
+
+    <a href="/listings?category=Beach" class="filter <%= selectedCategory === 'Beach' ? 'active' : '' %>" data-category="Beach">
+      <i class="fa-solid fa-umbrella-beach"></i>
+      Beach
+    </a>
+  </div>
+
+  <!-- Listings Grid -->
+  <div id="listings-container" class="listings-container row row-cols-xxl-5 row-cols-xl-5 row-cols-lg-4 row-cols-md-2 row-cols-1 g-4 mx-0 px-3 px-md-4">
+    <% for (let listing of listings) { %>
+      <div class="col d-flex align-items-stretch" data-category="<%= listing.category %>">
+        <a href="/listings/<%= listing._id %>" class="text-decoration-none text-dark w-100">
+          <div class="card h-100 shadow-sm border-0">
+            <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title fw-semibold text-primary mb-2">
+                <%= listing.title %>
+              </h5>
+              <h6 class="card-subtitle text-muted mb-2">
+                ₹<%= listing.price.toLocaleString("en-IN") %> / night
+              </h6>
+              <p class="text-secondary small mt-auto">
+                <i class="fa fa-map-marker-alt me-1 text-danger"></i>
+                <%= listing.location %>, <%= listing.country %>
+              </p>
+            </div>
+          </div>
+        </a>
+      </div>
+    <% } %>
+  </div>
+</div>

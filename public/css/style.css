@@ -1,0 +1,47 @@
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.container{
+    flex: 1;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+.navbar{
+    height: 5rem;
+    background-color: #e3f2fd;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    padding: 0 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.fa-compass{
+    font-size: 2rem;
+    color: #fe424d;
+}
+
+/* Ensure navbar collapses below and doesn't overlap page content */
+/* ✅ Base fix — ensures navbar collapse looks correct on small screens */
+@media (max-width: 768px) {
+  .navbar-collapse {
+    background-color: #fff;       /* only on small screens */
+    position: relative;           /* prevents overlap */
+    z-index: 1000;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* optional shadow */
+  }
+}
+
+/* ✅ Optional enhancement — smooth slide-down animation */
+@media (max-width: 768px) {
+  .navbar-collapse.collapsing {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.35s ease;
+  }
+
+  .navbar-collapse.show {
+    transition: height 0.35s ease;
+  }
+}
+
