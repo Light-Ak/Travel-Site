@@ -9,7 +9,7 @@ const listingSchema = joi.object({
         location: joi.string().required(),
         country: joi.string().required(),
         category: joi.string()
-            .valid('Mountains', 'Seaside', 'Camping', 'Countryside', 'City Life', 'Beach'),
+            .valid('Mountains', 'Seaside', 'Camping', 'Countryside', 'City', 'Beach'),
         image: joi.object({
             url: joi.string().uri().required(),
             filename: joi.string().required()
