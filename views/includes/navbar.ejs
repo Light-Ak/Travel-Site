@@ -7,45 +7,56 @@
       <span>Travel Site</span>
     </a>
 
-    <!-- Search Bar always visible -->
-    <form action="/listings" method="GET" class="d-flex mx-3 flex-grow-1">
-      <input 
-        type="text" 
-        name="search" 
-        class="form-control me-2" 
-        placeholder="Search by title or location..." 
-        value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>">
-      <% if (typeof selectedCategory !== 'undefined' && selectedCategory) { %>
-        <input type="hidden" name="category" value="<%= selectedCategory %>">
-      <% } %>
-      <button class="btn btn-primary" type="submit">
-        <i class="fa fa-search me-1"></i> Search
-      </button>
-    </form>
-
     <!-- Toggler for mobile -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Navbar Content (links + auth buttons) -->
+    <!-- Navbar Content -->
     <div class="collapse navbar-collapse" id="navbarNav">
-      <!-- Links -->
-      <ul class="navbar-nav me-auto mb-2 mb-md-0">
-        <li class="nav-item">
-          <a class="nav-link active fw-semibold" href="/listings">
-            <i class="fa fa-home me-1"></i> Home
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link fw-semibold" href="/listings/new">
-            <i class="fa fa-plus-circle me-1"></i> Add Listing
-          </a>
-        </li>
-      </ul>
+      
+      <!-- Centered Links + Search -->
+      <div class="d-flex flex-grow-1 align-items-center justify-content-center">
+        <!-- Nav Links -->
+        <ul class="navbar-nav me-3">
+          <li class="nav-item">
+            <a class="nav-link active fw-semibold" href="/listings">
+              <i class="fa fa-home me-1"></i> Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fw-semibold" href="/listings/new">
+              <i class="fa fa-plus-circle me-1"></i> Add Listing
+            </a>
+          </li>
+        </ul>
 
-      <!-- Auth Buttons -->
-      <div class="d-flex gap-2 ms-auto">
+        <!-- Search Bar -->
+        <div class="px-3 px-md-4 py-2">
+          <form action="/listings" method="GET" class="d-flex">
+            <input 
+              type="text" 
+              name="search" 
+              class="form-control me-2" 
+              placeholder="Search by title or location..." 
+              value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>">
+            
+            <% if (typeof selectedCategory !== 'undefined' && selectedCategory) { %>
+              <input type="hidden" name="category" value="<%= selectedCategory %>">
+            <% } %>
+            
+            <button class="btn btn-primary" type="submit">
+              <i class="fa fa-search me-1"></i> Search
+            </button>
+          </form>
+        </div>
+
+
+
+      </div>
+
+      <!-- Right-aligned Auth Buttons -->
+      <div class="d-flex ms-auto gap-2">
         <% if (!currentUser) { %>
           <a href="/login" class="btn btn-outline-primary">
             <i class="fa fa-sign-in me-1"></i> Login
@@ -64,6 +75,7 @@
           </form>
         <% } %>
       </div>
+
     </div>
   </div>
 </nav>
@@ -75,7 +87,6 @@
     border-color: #007bff;
   }
 
-  /* Button alignment inside search */
   .navbar .btn-primary {
     display: flex;
     align-items: center;
@@ -83,18 +94,12 @@
     padding: 0.375rem 0.75rem;
   }
 
-  /* Responsive search bar */
-  .navbar form.d-flex {
-    flex-grow: 1;
-    min-width: 200px;
-  }
-
+  /* Make search & links responsive on smaller screens */
   @media (max-width: 767px) {
-    /* Stack search above links on small screens */
-    .navbar form.d-flex {
+    .navbar .d-flex.flex-grow-1 {
       flex-direction: column;
+      align-items: stretch;
       gap: 0.5rem;
-      margin-bottom: 0.5rem;
     }
 
     .navbar .navbar-nav {
