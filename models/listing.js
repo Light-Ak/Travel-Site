@@ -23,8 +23,8 @@ const listingSchema = new Schema({
     owner: { type: Schema.Types.ObjectId, ref: 'User' },
     category: {
         type: String,
-        enum: ['Mountains', 'Seaside', 'Camping', 'Countryside', 'City Life', 'Beach'],
-        default: 'City Life'
+        enum: ['Mountains', 'Seaside', 'Camping', 'Countryside', 'City', 'Beach'],
+        default: 'City'
     }
 });
 

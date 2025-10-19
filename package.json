@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Light-Ak/Airnbnb-Clone.git"
+    "url": "git+https://github.com/Light-Ak/Travel-Site.git"
   },
   "keywords": [],
   "author": "Akash",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Light-Ak/Airnbnb-Clone/issues"
+  "url": "https://github.com/Light-Ak/Travel-Site/issues"
   },
-  "homepage": "https://github.com/Light-Ak/Airnbnb-Clone#readme",
+  "homepage": "https://github.com/Light-Ak/Travel-Site#readme",
   "dependencies": {
     "cloudinary": "^1.41.3",
     "connect-flash": "^0.1.1",
